@@ -1,10 +1,32 @@
-<script setup></script>
+<script setup>
+import { reactive } from "vue";
+
+const estado = reactive({
+    primeiroValor: "",
+});
+
+function alteraValor(valor) {
+    estado.primeiroValor = valor;
+}
+</script>
 
 <template>
     <div class="container w-50 calc">
         <div class="container">
-            <header class="p-5 mb-2 mt-5 bg-light rounded-3">
-                <h1>VISOR</h1>
+            <header class="p-5 mb-2 mt-5 bg-light rounded-3 row">
+                <span
+                    type="number"
+                    class="h1 m-2 container col-3 text-center"
+                    >{{ estado.primeiroValor }}</span
+                >
+                <span type="text" class="h1 m-2 container col-3 text-center"
+                    >X</span
+                >
+                <span
+                    type="number"
+                    class="h1 m-2 container col-3 text-center"
+                    >{{ estado.segundoValor }}</span
+                >
             </header>
         </div>
         <div class="container">
@@ -20,16 +42,18 @@
         </div>
         <div class="container text-center m-auto">
             <div class="row">
-                <button type="button" class="btn btn-success col-4">CE</button>
-                <button type="button" class="btn btn-outline-secondary col-4">
-                    C
-                </button>
+                <button type="button" class="btn btn-success col-8">CE</button>
+
                 <button type="button" class="btn btn-outline-secondary col-4">
                     &larr;
                 </button>
             </div>
             <div class="row">
-                <button type="button" class="btn btn-outline-secondary col-4">
+                <button
+                    @click="alteraValor(7)"
+                    type="button"
+                    class="btn btn-outline-secondary col-4"
+                >
                     7
                 </button>
                 <button type="button" class="btn btn-outline-secondary col-4">
