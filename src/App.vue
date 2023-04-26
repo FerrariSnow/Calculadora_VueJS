@@ -2,98 +2,90 @@
 import { reactive } from "vue";
 
 const estado = reactive({
-    primeiroValor: "",
+    primeiroValor: 0,
+    segundoValor: 0,
+    resultado: 0,
+    operador: "+",
 });
 
-function alteraValor(valor) {
-    estado.primeiroValor = valor;
+function alteraValor1(evento) {
+    estado.primeiroValor = evento.target.value;
+    calcula();
+}
+
+function alteraValor2(evento) {
+    estado.segundoValor = evento.target.value;
+    calcula();
+}
+
+function alteraOperador(evento) {
+    estado.operador = evento.target.value;
+    calcula();
+}
+
+function calcula() {
+    switch (estado.operador) {
+        case "+":
+            estado.resultado =
+                Number(estado.primeiroValor) + Number(estado.segundoValor);
+            break;
+        case "-":
+            estado.resultado =
+                Number(estado.primeiroValor) - Number(estado.segundoValor);
+            break;
+        case "*":
+            estado.resultado =
+                Number(estado.primeiroValor) * Number(estado.segundoValor);
+            break;
+        case "/":
+            estado.resultado =
+                Number(estado.primeiroValor) / Number(estado.segundoValor);
+            break;
+        default:
+            break;
+    }
 }
 </script>
 
 <template>
-    <div class="container w-50 calc">
-        <div class="container">
-            <header class="p-5 mb-2 mt-5 bg-light rounded-3 row">
-                <span
-                    type="number"
-                    class="h1 m-2 container col-3 text-center"
-                    >{{ estado.primeiroValor }}</span
-                >
-                <span type="text" class="h1 m-2 container col-3 text-center"
-                    >X</span
-                >
-                <span
-                    type="number"
-                    class="h1 m-2 container col-3 text-center"
-                    >{{ estado.segundoValor }}</span
-                >
-            </header>
-        </div>
-        <div class="container">
-            <select name="operacao" id="operacao" class="m-2 text-center">
-                <option value="standart">
-                    - Selecione a operação desejada -
-                </option>
-                <option value="soma">+</option>
-                <option value="menos">-</option>
-                <option value="divide">/</option>
-                <option value="multiplica">x</option>
+    <h1 class="container text-center mt-5">Calculadora em VueJS</h1>
+    <div class="container">
+        <header class="p-5 mb-2 mt-5 bg-light rounded-3 row">
+            <span class="h1 m-2 container col-3 text-center">
+                {{ estado.primeiroValor }}
+            </span>
+            <span class="h1 m-2 container col-1 text-center">
+                {{ estado.operador }}
+            </span>
+            <span class="h1 m-2 container col-3 text-center">
+                {{ estado.segundoValor }}
+            </span>
+            <span class="h1 m-2 container col-1 text-center">=</span>
+            <span class="h1 m-2 container col-3 text-center">
+                {{ estado.resultado }}
+            </span>
+        </header>
+        <p class="container text-center h4">
+            Digite abaixo o primeiro valor, selecione a operação desejada e após
+            digite o segundo valor:
+        </p>
+        <div class="container d-flex justify-content-center">
+            <input
+                type="number"
+                @keyup="alteraValor1"
+                class="m-1 text-center"
+            />
+            <select @change="alteraOperador" class="m-1 text-center">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
             </select>
-        </div>
-        <div class="container text-center m-auto">
-            <div class="row">
-                <button type="button" class="btn btn-success col-8">CE</button>
-
-                <button type="button" class="btn btn-outline-secondary col-4">
-                    &larr;
-                </button>
-            </div>
-            <div class="row">
-                <button
-                    @click="alteraValor(7)"
-                    type="button"
-                    class="btn btn-outline-secondary col-4"
-                >
-                    7
-                </button>
-                <button type="button" class="btn btn-outline-secondary col-4">
-                    8
-                </button>
-                <button type="button" class="btn btn-outline-secondary col-4">
-                    9
-                </button>
-            </div>
-            <div class="row">
-                <button type="button" class="btn btn-outline-secondary col-4">
-                    4
-                </button>
-                <button type="button" class="btn btn-outline-secondary col-4">
-                    5
-                </button>
-                <button type="button" class="btn btn-outline-secondary col-4">
-                    6
-                </button>
-            </div>
-            <div class="row">
-                <button type="button" class="btn btn-outline-secondary col-4">
-                    1
-                </button>
-                <button type="button" class="btn btn-outline-secondary col-4">
-                    2
-                </button>
-                <button type="button" class="btn btn-outline-secondary col-4">
-                    3
-                </button>
-            </div>
-            <div class="row">
-                <button type="button" class="btn btn-outline-secondary col-4">
-                    ,
-                </button>
-                <button type="button" class="btn btn-outline-secondary col-4">
-                    0
-                </button>
-                <button type="button" class="btn btn-danger col-4">=</button>
-            </div>
+            <input
+                type="number"
+                @keyup="alteraValor2"
+                class="m-1 text-center"
+            />
         </div>
     </div>
 </template>
